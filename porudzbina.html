@@ -130,6 +130,7 @@ a{color:#9184d9}a:hover{color:#b5abfc}
     </div>
     <button type="button" id="potvrdi" class="btn btn-primary btn-block" style="font-size:16px;padding:14px;color:var(--color-accent)">Potvrdi porudžbinu</button>
     <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:13px;color:var(--color-neutral-300)">
+      <span>Porudžbina se šalje preko WhatsApp-a</span>
       <span>Lični poziv radi potvrde</span>
       <span>Originalni LR proizvod</span>
     </div>
@@ -147,7 +148,9 @@ function sel(n){cur=n;document.querySelectorAll('.pkg').forEach(function(b){var 
 document.querySelectorAll('.pkg').forEach(function(b){b.addEventListener('click',function(){sel(+b.dataset.paket)})});
 var q=parseInt(new URLSearchParams(location.search).get('paket'));if([1,2,3,4].indexOf(q)>-1)sel(q);
 $('potvrdi').addEventListener('click',function(){var v=function(i){return $(i).value.trim()};var ok=v('ime')&&v('telefon').length>=6&&v('adresa')&&v('grad');if(!ok){$('greska').hidden=false;return;}
-var b=document.querySelector('.pkg[data-paket="'+cur+'"]');$('t-ime').textContent=v('ime').split(' ')[0];$('t-paket').textContent=b.dataset.title;$('t-cena').textContent=b.dataset.total;$('t-tel').textContent=v('telefon');$('forma').hidden=true;$('hvala').hidden=false;window.scrollTo(0,0);});
+var b=document.querySelector('.pkg[data-paket="'+cur+'"]');
+var msg='Nova porudžbina – Beauty Elixir 5u1\nPaket: '+b.dataset.title+' ('+b.dataset.total+')\nIme: '+v('ime')+'\nTelefon: '+v('telefon')+'\nAdresa: '+v('adresa')+', '+v('postanski-broj')+' '+v('grad')+(v('napomena')?'\nNapomena: '+v('napomena'):'');
+window.open('https://wa.me/381659141802?text='+encodeURIComponent(msg),'_blank');$('t-ime').textContent=v('ime').split(' ')[0];$('t-paket').textContent=b.dataset.title;$('t-cena').textContent=b.dataset.total;$('t-tel').textContent=v('telefon');$('forma').hidden=true;$('hvala').hidden=false;window.scrollTo(0,0);});
 })();
 </script>
 </body>
